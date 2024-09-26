@@ -221,7 +221,7 @@ class RRTGraph:
         eta = eta
 
 
-        obj =  -cp.trace(Ps)+10*cp.trace(H)
+        obj =  -cp.trace(Ps)+10*cp.trace(H) + 10*cp.trace(G)
         
         cons = [M[0]@Ps@M[0].T <= 1]
         cons += [M[1]@Ps@M[1].T <= 1]
@@ -255,7 +255,7 @@ class RRTGraph:
             cp.bmat([[H+G, Ps], [Ps, Q]]) >> 0
         ]
         cons += [
-            cp.bmat([[-G,(C@Ps + D@F).T], [(C@Ps + D@F), np.eye(q)]]) >> 0
+            cp.bmat([[G,(C@Ps + D@F).T], [(C@Ps + D@F), np.eye(q)]]) >> 0
         ]
         # cons += [cp.bmat([[H,Ps],[Ps,Q]])>>0]
         # cons += [Ps >= 0.00]
